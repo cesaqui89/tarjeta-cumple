@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Día de la madre - Arisdelsie</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Montserrat', sans-serif; overflow-x: hidden; padding: 20px;
+  }
+  .card {
+    width: 100%; max-width: 400px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 30px; padding: 40px 30px;
+    text-align: center; backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,183,77,0.1) 0%, transparent 70%);
+    animation: shimmer 4s ease-in-out infinite;
+  }
+  @keyframes shimmer { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(180deg)} }
+  .icon { font-size: 80px; margin-bottom: 10px; animation: float 3s ease-in-out infinite; position: relative; z-index: 1; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .subtitle {
+    font-weight: 300; font-size: 13px; color: rgba(120,60,80,0.6);
+    letter-spacing: 6px; text-transform: uppercase; margin-bottom: 8px;
+    position: relative; z-index: 1;
+  }
+  .name {
+    font-family: 'Great Vibes', cursive; font-size: 52px;
+    background: linear-gradient(135deg, #e91e63, #f06292, #ec407a);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 5px; position: relative; z-index: 1;
+  }
+  .title {
+    font-weight: 600; font-size: 18px; color: #ad1457;
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 25px;
+    position: relative; z-index: 1;
+  }
+  .divider { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #f48fb1, transparent); margin: 0 auto 25px; position: relative; z-index: 1; }
+  .message {
+    font-weight: 300; font-size: 15px; color: rgba(120,60,80,0.85);
+    line-height: 1.9; margin-bottom: 28px; position: relative; z-index: 1; padding: 0 5px;
+  }
+  .paws { display: flex; justify-content: center; gap: 12px; margin-bottom: 25px; position: relative; z-index: 1; }
+  .paw { font-size: 28px; animation: sway 2s ease-in-out infinite; }
+  .paw:nth-child(2) { animation-delay: 0.3s; }
+  .paw:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes sway { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
+  .wish-btn {
+    background: linear-gradient(135deg, #f48fb1, #ec407a);
+    border: none; color: #fff; padding: 14px 36px; border-radius: 50px;
+    font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+    position: relative; z-index: 1; transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 5px 25px rgba(244,143,177,0.4);
+  }
+  .wish-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(244,143,177,0.6); }
+  .wish-btn:active { transform: scale(0.97); }
+  .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; overflow: hidden; }
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+    border-radius: 20px; padding: 40px 30px; text-align: center;
+    max-width: 350px; width: 100%; border: 1px solid rgba(255,255,255,0.5);
+    animation: fadeInUp 0.5s ease;
+  }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  .modal .emoji { font-size: 60px; margin-bottom: 15px; }
+  .modal p { color: rgba(120,60,80,0.9); font-size: 15px; line-height: 1.9; font-weight: 300; margin-bottom: 25px; }
+  .modal .close-btn {
+    background: linear-gradient(135deg, #f48fb1, #ec407a);
+    border: none; color: #fff; padding: 12px 30px; border-radius: 50px;
+    font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+  }
+  .modal .close-btn:active { transform: scale(0.95); }
+  .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  .star { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; animation: twinkle 3s ease-in-out infinite; }
+  @keyframes twinkle { 0%,100%{opacity:0.2} 50%{opacity:1} }
+  .music-prompt { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 300; align-items: center; justify-content: center; padding: 20px; }
+  .music-prompt.show { display: flex; }
+  .music-prompt-box { background: linear-gradient(135deg, #fce4ec, #f8bbd0); border-radius: 20px; padding: 40px 30px; text-align: center; max-width: 320px; width: 100%; border: 1px solid rgba(255,255,255,0.5); animation: fadeInUp 0.6s ease; }
+  .music-prompt-box .music-icon { font-size: 50px; margin-bottom: 15px; animation: float 2s ease-in-out infinite; }
+  .music-prompt-box p { color: rgba(120,60,80,0.9); font-size: 16px; line-height: 1.8; font-weight: 300; margin-bottom: 25px; }
+  .music-prompt-box .btn-yes, .music-prompt-box .btn-no {
+    border: none; color: #fff; padding: 12px 30px; border-radius: 50px;
+    font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer; margin: 5px;
+  }
+  .music-prompt-box .btn-yes { background: linear-gradient(135deg, #f48fb1, #ec407a); }
+  .music-prompt-box .btn-no { background: rgba(120,60,80,0.2); }
+  .music-toggle { display: none; position: fixed; bottom: 20px; right: 20px; width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.3); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.4); color: #ad1457; font-size: 22px; cursor: pointer; z-index: 150; transition: transform 0.3s; align-items: center; justify-content: center; }
+  .music-toggle:hover { transform: scale(1.1); }
+  .music-toggle.show { display: flex; }
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="card">
+  <div class="icon">🐕</div>
+  <div class="subtitle">Feliz día</div>
+  <div class="name">Arisdelsie</div>
+  <div class="paws"><span class="paw">🐾</span><span class="paw">🐕</span><span class="paw">🐾</span></div>
+  <div class="title">Mamacita Perruna</div>
+  <div class="divider"></div>
+  <p class="message">
+    Arisdelsie, mamá de Lukita,<br>
+    tu amor trasciende las especies,<br>
+    porque el corazón no entiende de límites.<br>
+    Lukita tiene la suerte de tenerte,<br>
+    y tú la felicidad de tenerlo. 🐾
+  </p>
+  <button class="wish-btn" onclick="openWish()">Abrir mi carta 💌</button>
+</div>
+<audio id="bgMusic" loop preload="auto" src="clasica1.mp3"></audio>
+<div class="music-prompt" id="musicPrompt">
+  <div class="music-prompt-box">
+    <div class="music-icon">🎵</div>
+    <p>¿Te gustaría escuchar una canción<br>mientras lees la carta?</p>
+    <button class="btn-yes" onclick="acceptMusic()">Sí, quiero 🎶</button>
+    <button class="btn-no" onclick="dismissMusic()">Ahora no</button>
+  </div>
+</div>
+<button class="music-toggle" id="musicToggle" onclick="toggleMusic()">🎵</button>
+<div class="confetti-container" id="confetti"></div>
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="emoji">🐶</div>
+    <p>
+      Mi amor Arisdelsie,<br><br>
+      Eres la mamá perruna más hermosa del mundo.
+      Lukita sabe que tiene el mejor hogar,
+      el mejor abrazo y la mejor mamá.<br><br>
+      Gracias por amarlo como se ama
+      a un miembro más de la familia,
+      porque eso es exactamente lo que es.<br><br>
+      <strong>Te amo a ti y a nuestro pequeño. 🐾💗</strong>
+    </p>
+    <button class="close-btn" onclick="closeWish()">Cerrar con amor 🌹</button>
+  </div>
+</div>
+<script>
+const starsEl=document.getElementById('stars');
+for(let i=0;i<50;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*3+'s';s.style.animationDuration=(2+Math.random()*3)+'s';starsEl.appendChild(s);}
+function launchConfetti(){const c=document.getElementById('confetti');const colors=['#f48fb1','#f8bbd0','#fce4ec','#fff','#ec407a','#f06292'];for(let i=0;i<80;i++){const d=document.createElement('div');d.className='confetti';d.style.cssText=`position:absolute;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;top:-10px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>0.5?'50%':'2px'};opacity:1;animation:confettiFall ${2+Math.random()*3}s ease-in forwards;animation-delay:${Math.random()*1.5}s`;c.appendChild(d);}setTimeout(()=>{c.innerHTML='';},6000);}
+const sty=document.createElement('style');sty.textContent='@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}';document.head.appendChild(sty);
+window.addEventListener('load',()=>setTimeout(launchConfetti,500));
+function openWish(){document.getElementById('modal').classList.add('show');launchConfetti();}
+function closeWish(){document.getElementById('modal').classList.remove('show');}
+const bgMusic=document.getElementById('bgMusic');
+let musicPlaying=false;
+setTimeout(()=>{document.getElementById('musicPrompt').classList.add('show');},3000);
+function acceptMusic(){
+  document.getElementById('musicPrompt').classList.remove('show');
+  bgMusic.volume=1;
+  bgMusic.currentTime=0;
+  bgMusic.play().then(()=>{
+    musicPlaying=true;
+    document.getElementById('musicToggle').classList.add('show');
+    document.getElementById('musicToggle').textContent='⏸';
+  }).catch(e=>console.error('Error al reproducir música:',e));
+}
+function dismissMusic(){document.getElementById('musicPrompt').classList.remove('show');}
+function toggleMusic(){
+  if(musicPlaying){bgMusic.pause();document.getElementById('musicToggle').textContent='▶️';}
+  else{bgMusic.play();document.getElementById('musicToggle').textContent='⏸';}
+  musicPlaying=!musicPlaying;
+}
+</script>
+</body>
+</html>
